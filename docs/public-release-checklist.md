@@ -30,7 +30,7 @@ Complete this checklist before announcing Kaeser Bench or accepting external con
 
 ## Project quality
 
-- [ ] Run `bun install --frozen-lockfile`, `bun run check`, and `bun run build` from a clean clone.
+- [x] Run `bun install --frozen-lockfile`, `bun run check`, and `bun run build` from a clean clone.
 - [x] Confirm all issue-form labels exist or remove their automatic labels.
 - [ ] Add a release/versioning policy before publishing packages or benchmark datasets.
 - [ ] Document the sandbox threat model before executing generated code in shared infrastructure.
