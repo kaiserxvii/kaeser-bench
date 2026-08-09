@@ -57,11 +57,17 @@ bun run build
 Useful commands:
 
 ```sh
+bun run commit
+bun run changelog:preview
 bun run format
 bun run lint
 bun run typecheck
 bun test
 ```
+
+Commits and pull-request titles follow
+[`docs/commit-style.md`](docs/commit-style.md). Release notes are generated from that history with
+git-cliff rather than maintained as duplicate handwritten entries.
 
 ## Current status
 
