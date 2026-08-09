@@ -1,0 +1,49 @@
+name: Benchmark task proposal
+description: Propose a standardized frontend task for the benchmark suite.
+title: "task: "
+labels: [benchmark-task]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Task title
+      placeholder: Account security settings
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: User scenario
+      description: Describe the interface and user outcome without prescribing an implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: Capabilities exercised
+      description: Which components, patterns, interactions, and accessibility behaviors are tested?
+    validations:
+      required: true
+  - type: textarea
+    id: assertions
+    attributes:
+      label: Objective assertions
+      description: Which requirements can be checked deterministically?
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Ambiguity and bias risks
+      description: Identify hidden assumptions, subjective criteria, or model/provider advantages.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: The task can run without private data or network-only fixtures.
+          required: true
+        - label: The task tests design-system understanding rather than framework trivia alone.
+          required: true

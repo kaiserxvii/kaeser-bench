@@ -1,0 +1,38 @@
+name: Feature proposal
+description: Propose a scoped platform, tooling, or documentation improvement.
+title: "proposal: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Explain the problem before prescribing an implementation.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is difficult or impossible today, and who is affected?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed direction
+      description: Describe the smallest useful change and alternatives considered.
+    validations:
+      required: true
+  - type: textarea
+    id: comparability
+    attributes:
+      label: Benchmark impact
+      description: Could this change inputs, scoring, reproducibility, or comparison with old runs?
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and discussions.
+          required: true
+        - label: This proposal is provider-neutral or explains why it cannot be.
+          required: true

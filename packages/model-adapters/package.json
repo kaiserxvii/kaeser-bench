@@ -1,0 +1,13 @@
+{
+  "name": "@kaeser/model-adapters",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist --target bun --packages external"
+  },
+  "dependencies": {
+    "@kaeser/contracts": "workspace:*"
+  }
+}

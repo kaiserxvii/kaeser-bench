@@ -1,0 +1,17 @@
+{
+  "name": "@kaeser/runner",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir ./dist --target bun --packages external"
+  },
+  "dependencies": {
+    "@kaeser/benchmark": "workspace:*",
+    "@kaeser/contracts": "workspace:*",
+    "@kaeser/evaluator": "workspace:*",
+    "@kaeser/model-adapters": "workspace:*",
+    "@kaeser/retrieval": "workspace:*",
+    "@kaeser/sandbox": "workspace:*"
+  }
+}
