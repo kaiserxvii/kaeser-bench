@@ -42,8 +42,16 @@ Before opening a pull request:
 
 ## Commit style
 
-Use focused, imperative commit messages. Conventional Commit prefixes are welcome but not
-required until a release process is chosen.
+Every commit and pull-request title must follow the project's
+[`docs/commit-style.md`](docs/commit-style.md) guide. Use Commitizen for an interactive prompt:
+
+```sh
+bun run commit
+```
+
+The `commit-msg` hook validates local commits with commitlint. Pull-request titles are validated in
+CI because squash merges use the PR title as the commit title on `main`. Those titles become the
+source for the generated changelog.
 
 ## Pull-request expectations
 
