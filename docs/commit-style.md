@@ -18,19 +18,19 @@ with a lowercase letter, and do not end it with a period.
 
 ## Types
 
-| Type | Use for | Changelog section |
+| Type | Use for | Release impact |
 | --- | --- | --- |
-| `feat` | new user- or contributor-facing behavior | Added |
-| `fix` | corrections to behavior | Fixed |
-| `perf` | measurable performance improvements | Performance |
-| `refactor` | internal changes without new behavior or a fix | Changed |
-| `docs` | documentation only | Documentation |
-| `test` | tests and test fixtures | Testing |
-| `build` | dependencies, packaging, and build tooling | Build |
-| `ci` | continuous-integration configuration | Continuous integration |
-| `style` | formatting without behavioral changes | Styling |
-| `revert` | reverting an earlier commit | Reverted |
-| `chore` | maintenance that fits no category above | Maintenance |
+| `feat` | new user- or contributor-facing behavior | Minor Changes |
+| `fix` | corrections to behavior | Patch Changes |
+| `perf` | measurable performance improvements | Patch Changes |
+| `refactor` | internal changes without new behavior or a fix | Patch Changes |
+| `docs` | documentation only | Patch Changes |
+| `test` | tests and test fixtures | Patch Changes |
+| `build` | dependencies, packaging, and build tooling | Patch Changes |
+| `ci` | continuous-integration configuration | Patch Changes |
+| `style` | formatting without behavioral changes | Patch Changes |
+| `revert` | reverting an earlier commit | Patch Changes |
+| `chore` | maintenance that fits no category above | Patch Changes |
 
 Prefer the most specific type. A dependency update is usually `build(deps)`, while a workflow-only
 change is `ci(repo)`.
@@ -57,7 +57,9 @@ BREAKING CHANGE: ArtifactReference.location now requires a versioned URI.
 ```
 
 Breaking changes are based on public contracts and published benchmark semantics, not merely on the
-size of the diff.
+size of the diff. They appear under Major Changes; features appear under Minor Changes; every other
+type appears under Patch Changes. These names match the semantic version bump git-cliff calculates,
+including before Kaeser Bench reaches 1.0.
 
 ## Examples
 
@@ -108,4 +110,12 @@ bun run version:next
 ```
 
 Do not edit generated changelog entries by hand. Correct the source commit or adjust `cliff.toml`,
-then regenerate the file. The release process will eventually own changelog generation and tags.
+then regenerate the file. Each entry links to its pull request and commit and credits its GitHub
+author when that metadata is available. Set `GITHUB_TOKEN` when generating frequently to avoid
+GitHub's anonymous API rate limit; GitHub Actions provides this token automatically.
+
+The first paragraph of a commit body is suitable for extra release context. git-cliff preserves
+multiline bodies and indents them beneath the matching changelog entry, so examples and migration
+notes can be included when the release history contains them.
+
+The release process will eventually own changelog generation and tags.
