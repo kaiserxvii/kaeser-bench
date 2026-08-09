@@ -12,8 +12,8 @@ Use a GitHub issue for substantial features, new evaluation dimensions, scoring-
 and benchmark tasks. This lets maintainers establish scope and comparability before implementation.
 Small documentation fixes can go directly to a pull request.
 
-The repository does not yet have a license. Until one is selected, external pull requests cannot
-be accepted for reuse or redistribution. Discussion and issue proposals are still welcome.
+Unless a contribution explicitly states otherwise, submitting it means agreeing to license it
+under the repository's [Apache License 2.0](LICENSE).
 
 ## Local workflow
 
