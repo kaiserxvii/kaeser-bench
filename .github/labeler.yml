@@ -1,0 +1,48 @@
+"area: benchmark":
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/benchmark/**
+
+"area: design-system":
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/design-system/**
+
+"area: evaluation":
+  - changed-files:
+      - any-glob-to-any-file:
+          - packages/evaluator/**
+          - packages/model-adapters/**
+          - packages/retrieval/**
+          - packages/sandbox/**
+
+"area: platform":
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/runner/**
+          - packages/contracts/**
+
+"area: web":
+  - changed-files:
+      - any-glob-to-any-file:
+          - apps/web/**
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - docs/**
+
+tooling:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**
+          - .editorconfig
+          - .env.example
+          - .gitattributes
+          - .gitignore
+          - biome.json
+          - bun.lock
+          - bunfig.toml
+          - package.json
+          - tsconfig.json
