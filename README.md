@@ -4,6 +4,8 @@ An open benchmark for measuring whether AI-generated frontend code belongs in a 
 design system—not merely whether it renders. The name **Kaeser** is a play on Kai and the name's
 Caesar lineage; the benchmark is the proving ground.
 
+Canonical repository: [github.com/kaiserxvii/kaeser-bench](https://github.com/kaiserxvii/kaeser-bench)
+
 The project will provide a sample design system, a standardized task suite, controlled context
 assembly, isolated generation and rendering, automated evaluators, and a public playground and
 leaderboard. This repository currently contains only the foundations: package boundaries,
@@ -88,6 +90,6 @@ with host credentials. Report vulnerabilities privately as described in
 
 ## License
 
-A license has not been selected yet. Choose and add an OSI-approved license before accepting
-external contributions or describing a release as open source. Code and benchmark-data licensing
-should be decided explicitly because they may use different terms.
+Kaeser Bench is licensed under the [Apache License 2.0](LICENSE). Unless a file or directory says
+otherwise, that license covers the code, documentation, benchmark definitions, and original sample
+design-system assets in this repository. Third-party materials retain their original licenses.

@@ -1,7 +1,17 @@
 {
   "name": "kaeser-bench",
   "version": "0.0.0",
+  "description": "An open benchmark for evaluating whether AI-generated frontends follow a real design system.",
   "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaiserxvii/kaeser-bench.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaiserxvii/kaeser-bench/issues"
+  },
+  "homepage": "https://github.com/kaiserxvii/kaeser-bench#readme",
   "type": "module",
   "packageManager": "bun@1.3.4",
   "workspaces": [
