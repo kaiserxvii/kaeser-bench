@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir ./dist --target bun --packages external"
+    "build": "bun build ./src/index.ts --outdir ./dist --target bun --packages external",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@kaeser/benchmark": "workspace:*",
@@ -13,5 +14,10 @@
     "@kaeser/model-adapters": "workspace:*",
     "@kaeser/retrieval": "workspace:*",
     "@kaeser/sandbox": "workspace:*"
+  },
+  "devDependencies": {
+    "@kaeser/typescript-config": "workspace:*",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
   }
 }
