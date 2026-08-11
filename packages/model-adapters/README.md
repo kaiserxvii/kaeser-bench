@@ -2,8 +2,8 @@
 
 ## Summary
 
-Provides a consistent interface for invoking different AI models. Adapters translate a normalized
-Kaeser Bench request into provider-specific calls and return comparable output and usage metadata.
+Provides a consistent interface for invoking AI models. Adapters translate a normalized Kaeser
+Bench request into provider-specific calls and return comparable output with auditable provenance.
 
 ## Why it exists
 
@@ -28,3 +28,27 @@ tasks or leaking into the rest of the evaluation pipeline.
 
 Provider SDKs and authentication remain private implementation details here. Adapters do not choose
 benchmark tasks, assemble retrieval context, run generated code, or calculate scores.
+
+## Usage
+
+The first adapter uses OpenAI's Responses API through the strongly typed Vercel AI SDK provider:
+
+```ts
+import { createOpenAIAdapter } from "@kaeser/model-adapters";
+
+const model = createOpenAIAdapter({ model: "gpt-5.6" });
+const invocation = await model.generate(request, abortSignal);
+```
+
+For local development, put `OPENAI_API_KEY` in the repository's `.env` file. Bun loads `.env`
+automatically, and the OpenAI provider reads that standard variable. `apiKey` and `baseURL` may be
+passed explicitly for isolated tests or compatible gateways.
+
+The adapter deliberately disables SDK retries so every benchmark invocation maps to one provider
+request. Callers own retry policy and can cancel an in-flight request with an `AbortSignal`.
+
+Every generation returns one provider-neutral invocation containing normalized output and
+provenance. Provenance distinguishes the requested model from the provider-reported model and
+retains the provider request body, response ID and body, headers, finish reason, warnings, and
+provider metadata. Pin exact model IDs in benchmark configuration and persist this evidence with the
+run so aliases or compatible gateways cannot make provenance ambiguous.

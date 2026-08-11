@@ -8,6 +8,8 @@
     "build": "bun build ./src/index.ts --outdir ./dist --target bun --packages external"
   },
   "dependencies": {
-    "@kaeser/contracts": "workspace:*"
+    "@ai-sdk/openai": "4.0.37",
+    "@kaeser/contracts": "workspace:*",
+    "ai": "7.0.59"
   }
 }

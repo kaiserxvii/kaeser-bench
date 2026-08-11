@@ -1,8 +1,7 @@
-import type { ModelOutput, ModelRequest } from "@kaeser/contracts";
-
-export interface ModelAdapter {
-  readonly provider: string;
-  readonly model: string;
-  readonly version: string;
-  generate(request: ModelRequest, signal?: AbortSignal): Promise<ModelOutput>;
-}
+export type { ModelAdapter } from "./model.adapter";
+export { createOpenAIAdapter } from "./providers/openai/openai.provider";
+export type {
+  OpenAIAdapterOptions,
+  OpenAIModelId,
+} from "./providers/openai/types/openai.types";
+export type { ProviderAdapterOptions } from "./types/providers.types";
