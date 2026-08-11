@@ -36,6 +36,7 @@ packages/
   model-adapters/     Model-provider boundary
   retrieval/          Controlled context and retrieval boundary
   sandbox/            Isolated build, render, and interaction boundary
+  typescript-config/  Shared TypeScript defaults for Bun and browser packages
 docs/
   decisions/          Architecture decision records
   architecture.md     System boundaries and data flow
@@ -64,8 +65,17 @@ bun run changelog:preview
 bun run format
 bun run lint
 bun run typecheck
-bun test
+bun run test
 ```
+
+Turborepo schedules `build`, `typecheck`, and `test` against the workspace dependency graph and
+caches successful work. Bun remains the package manager and keeps one lockfile and one central
+package store. The small `node_modules` directories inside workspaces are dependency-isolation
+symlinks into that store, not duplicate package installations.
+
+Shared tool versions are declared once in the root dependency catalog and referenced by packages
+with `catalog:`. Runtime dependencies still belong to the package that imports them, while shared
+TypeScript defaults live in `@kaeser/typescript-config`.
 
 Commits and pull-request titles follow
 [`docs/commit-style.md`](docs/commit-style.md). Release notes are generated from that history with

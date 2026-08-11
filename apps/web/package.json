@@ -4,9 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun build ./src/index.ts --outdir ./dist --target browser --packages external"
+    "build": "bun build ./src/index.ts --outdir ./dist --target browser --packages external",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@kaeser/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@kaeser/typescript-config": "workspace:*",
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
   }
 }
