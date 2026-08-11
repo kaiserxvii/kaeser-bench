@@ -63,12 +63,65 @@ export interface ModelUsage {
   latencyMs: number;
 }
 
-export interface ModelOutput {
-  provider: string;
-  model: string;
+export type ModelOutput = {
   text: string;
   usage: ModelUsage;
-}
+};
+
+export type ModelFinishReason =
+  | "stop"
+  | "length"
+  | "content-filter"
+  | "tool-calls"
+  | "error"
+  | "other";
+
+export type ModelWarning =
+  | {
+      type: "unsupported" | "compatibility";
+      feature: string;
+      details?: string;
+    }
+  | {
+      type: "deprecated";
+      setting: string;
+      message: string;
+    }
+  | {
+      type: "other";
+      message: string;
+    };
+
+export type ModelInvocationRequest = {
+  body?: unknown;
+};
+
+export type ModelInvocationResponse = {
+  id: string;
+  timestamp: string;
+  headers?: Readonly<Record<string, string>>;
+  body?: unknown;
+};
+
+export type ModelProviderMetadata = Readonly<Record<string, Readonly<Record<string, unknown>>>>;
+
+export type ModelInvocationProvenance = {
+  provider: string;
+  requestedModel: string;
+  providerModel: string;
+  adapterVersion: string;
+  finishReason: ModelFinishReason;
+  rawFinishReason?: string;
+  warnings: readonly ModelWarning[];
+  request: ModelInvocationRequest;
+  response: ModelInvocationResponse;
+  providerMetadata?: ModelProviderMetadata;
+};
+
+export type ModelInvocation = {
+  output: ModelOutput;
+  provenance: ModelInvocationProvenance;
+};
 
 export interface ArtifactReference {
   id: string;
