@@ -1,55 +1,43 @@
 # Kaeser Bench
 
-An open benchmark for measuring whether AI-generated frontend code belongs in a specific
-design system—not merely whether it renders. The name **Kaeser** is a play on Kai and the name's
-Caesar lineage; the benchmark is the proving ground.
+**Pretty is easy. Belonging is harder.**
 
-Canonical repository: [github.com/kaiserxvii/kaeser-bench](https://github.com/kaiserxvii/kaeser-bench)
+[![Research preview](https://img.shields.io/badge/status-research_preview-8B5CF6?style=for-the-badge&labelColor=18181B&logo=googlescholar&logoColor=white)](docs/north-star.md)
+[![CI](https://img.shields.io/github/actions/workflow/status/kaiserxvii/kaeser-bench/ci.yml?branch=main&style=for-the-badge&label=signal&labelColor=18181B&color=22C55E&logo=githubactions&logoColor=white)](https://github.com/kaiserxvii/kaeser-bench/actions/workflows/ci.yml)
+[![Bun 1.3.4](https://img.shields.io/badge/runtime-Bun_1.3.4-F472B6?style=for-the-badge&labelColor=18181B&logo=bun&logoColor=white)](https://bun.sh/)
+[![Apache 2.0](https://img.shields.io/badge/license-Apache_2.0-38BDF8?style=for-the-badge&labelColor=18181B)](LICENSE)
 
-The project will provide a sample design system, a standardized task suite, controlled context
-assembly, isolated generation and rendering, automated evaluators, and a public playground and
-leaderboard. This repository currently contains only the foundations: package boundaries,
-contracts, repository policy, and build tooling.
+Kaeser Bench measures how coding agents turn an incomplete product goal into a functional and
+accessible interface. The interface must follow an unfamiliar design system. Kaeser does more than
+test screenshot copying.
 
-## What the benchmark measures
+> Can an agent understand a system, make good UI decisions, implement them, inspect the result, and
+> repair its mistakes?
 
-- component and API selection
-- design-token and styling compliance
-- accessibility and interaction behavior
-- TypeScript and build correctness
-- documented pattern adherence
-- hallucinated APIs and unsupported behavior
-- visual quality
-- generation latency, token usage, and cost
+Kaeser studies **design-system reasoning under ambiguity**. Typography is the first test area. The
+rules are exact, but hierarchy, density, and emphasis still require judgment.
 
-## Repository map
+Read the [`north star`](docs/north-star.md) for the full research thesis.
 
-```text
-apps/
-  runner/             Evaluation orchestration process
-  web/                Future playground and leaderboard
-packages/
-  benchmark/          Versioned task-suite loading
-  contracts/          Shared, vendor-neutral data contracts
-  design-system/      Laboratory components, tokens, docs, and rules
-  evaluator/          Pluggable scoring interfaces and aggregation boundary
-  model-adapters/     Model-provider boundary
-  retrieval/          Controlled context and retrieval boundary
-  sandbox/            Isolated build, render, and interaction boundary
-  typescript-config/  Shared TypeScript defaults for Bun and browser packages
-docs/
-  decisions/          Architecture decision records
-  architecture.md     System boundaries and data flow
-  benchmark-spec.md   Benchmark invariants and proposed artifact layout
-```
+## Status
 
-Dependency direction is inward: apps compose packages, and packages exchange stable values from
-`@kaeser/contracts`. Provider SDKs, browser runtimes, and framework choices stay behind their
-respective package boundaries.
+Kaeser is an early research project. You cannot run the benchmark yet. The repository contains the
+contracts, boundaries, and tools for the first typography study.
 
-## Getting started
+## What it tests
 
-Requirements: [Bun](https://bun.sh/) 1.3.4.
+- **Understand:** Find an unfamiliar system and interpret its rules.
+- **Decide:** Plan the hierarchy, density, emphasis, and composition.
+- **Build:** Make a functional, accessible, and system-native UI.
+- **Reflect:** Render, review, and repair the UI. Keep the parts that work.
+
+Each result identifies a versioned model-harness configuration. It includes the source, screenshots,
+interaction traces, evaluator findings, usage, and agent trajectory. A leaderboard can show who
+won. Kaeser must also show what broke.
+
+## Quickstart
+
+Requires [Bun](https://bun.sh/) 1.3.4.
 
 ```sh
 bun install
@@ -57,49 +45,25 @@ bun run check
 bun run build
 ```
 
-Useful commands:
+These commands validate the current scaffold. A benchmark CLI will arrive with the first vertical
+slice.
 
-```sh
-bun run commit
-bun run changelog:preview
-bun run format
-bun run lint
-bun run typecheck
-bun run test
-```
+## Read more
 
-Turborepo schedules `build`, `typecheck`, and `test` against the workspace dependency graph and
-caches successful work. Bun remains the package manager and keeps one lockfile and one central
-package store. The small `node_modules` directories inside workspaces are dependency-isolation
-symlinks into that store, not duplicate package installations.
-
-Shared tool versions are declared once in the root dependency catalog and referenced by packages
-with `catalog:`. Runtime dependencies still belong to the package that imports them, while shared
-TypeScript defaults live in `@kaeser/typescript-config`.
-
-Commits and pull-request titles follow
-[`docs/commit-style.md`](docs/commit-style.md). Release notes are generated from that history with
-git-cliff rather than maintained as duplicate handwritten entries.
-
-## Current status
-
-This is a zero-feature scaffold. Interfaces are deliberately small and framework-neutral. See
-[`docs/architecture.md`](docs/architecture.md) for boundaries and
-[`docs/benchmark-spec.md`](docs/benchmark-spec.md) for the proposed benchmark shape.
+- [`docs/north-star.md`](docs/north-star.md): Why Kaeser exists
+- [`docs/benchmark-spec.md`](docs/benchmark-spec.md): Benchmark rules and artifact structure
+- [`docs/architecture.md`](docs/architecture.md): System boundaries and data flow
+- [`CONTRIBUTING.md`](CONTRIBUTING.md): Contribution workflow
 
 ## Contributing and security
 
-Kaeser Bench is being built in public. Read [`CONTRIBUTING.md`](CONTRIBUTING.md) before proposing a
-change and follow [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) in all project spaces. General usage
-questions belong in GitHub Discussions once enabled; reproducible defects and scoped proposals
-belong in GitHub Issues.
+Kaeser is a public project. We welcome issues and focused pull requests. Generated code is
+untrusted. Do not run it outside the future sandbox or with host credentials. Follow
+[`SECURITY.md`](SECURITY.md) to report a security problem.
 
-Generated code is untrusted. Do not execute model output outside the future sandbox boundary or
-with host credentials. Report vulnerabilities privately as described in
-[`SECURITY.md`](SECURITY.md), never in a public issue.
+Commits and pull-request titles follow [`docs/commit-style.md`](docs/commit-style.md).
 
 ## License
 
-Kaeser Bench is licensed under the [Apache License 2.0](LICENSE). Unless a file or directory says
-otherwise, that license covers the code, documentation, benchmark definitions, and original sample
-design-system assets in this repository. Third-party materials retain their original licenses.
+[Apache License 2.0](LICENSE). The name **Kaeser** is a play on Kai and the Caesar origin of the
+name. This benchmark is the proving ground.
