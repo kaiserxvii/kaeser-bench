@@ -23,6 +23,7 @@
     "typescript": "7.0.2"
   },
   "scripts": {
+    "benchmark:generate": "bun run ./apps/runner/src/generation.cli.ts",
     "build": "turbo run build",
     "changelog": "git-cliff --output CHANGELOG.md",
     "changelog:preview": "git-cliff --unreleased",
@@ -35,7 +36,8 @@
     "prepare": "husky",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "version:next": "git-cliff --unreleased --bumped-version"
+    "version:next": "git-cliff --unreleased --bumped-version",
+    "web:dev": "bun run --cwd apps/web dev"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.7",

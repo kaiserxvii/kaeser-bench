@@ -21,8 +21,9 @@ Read the [`north star`](docs/north-star.md) for the full research thesis.
 
 ## Status
 
-Kaeser is an early research project. You cannot run the benchmark yet. The repository contains the
-contracts, boundaries, and tools for the first typography study.
+Kaeser is an early research project. The first generation-only walking skeleton can run one
+typography task against one model and capture its inputs and result. Sandboxed execution and scoring
+are not implemented yet, so this is not a complete benchmark run.
 
 ## What it tests
 
@@ -45,8 +46,15 @@ bun run check
 bun run build
 ```
 
-These commands validate the current scaffold. A benchmark CLI will arrive with the first vertical
-slice.
+These commands validate the repository. To exercise the first model flow, copy `.env.example` to
+`.env`, add `OPENAI_API_KEY`, and run:
+
+```sh
+bun run benchmark:generate
+```
+
+The command uses `gpt-5.6-luna` by default and writes an inspectable, ignored result under `runs/`.
+See [`apps/runner/README.md`](apps/runner/README.md) for its artifact layout and current boundary.
 
 ## Read more
 

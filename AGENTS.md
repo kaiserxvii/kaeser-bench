@@ -2,6 +2,20 @@
 
 These instructions apply to coding agents and automated contributors working in Kaeser Bench.
 
+## TypeScript structure and testing
+
+- Keep public `index.ts` files as export-only package barrels.
+- Put TypeScript declarations in a package-local `src/types/` folder. Name type modules with a
+  `.types.ts` suffix; do not declare feature types inline in implementation modules.
+- Use dot-delimited role suffixes for TypeScript filenames, such as `model.adapter.ts`,
+  `openai.provider.ts`, `generation.runner.ts`, and `generation.runner.spec.ts`. Kebab-case may
+  describe the subject before the role suffix.
+- Name code after durable domain capabilities rather than delivery phases such as prototype or MVP.
+  Express intentionally limited behavior through explicit contracts and state.
+- Develop new behavior with test-driven development. Agree on the public seam first, then work in
+  one-behavior red-green cycles. Test observable behavior through public interfaces and mock only
+  system boundaries. Refactor only while the relevant tests are green.
+
 ## Commits and pull requests
 
 - Use Conventional Commits for every commit and pull-request title.

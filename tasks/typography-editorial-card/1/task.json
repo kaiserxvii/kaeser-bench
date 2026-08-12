@@ -1,0 +1,14 @@
+{
+  "id": "typography-editorial-card",
+  "version": "1",
+  "title": "Build an editorial field-note card",
+  "requiredCapabilities": ["responsive-layout", "semantic-html", "typographic-hierarchy"],
+  "dimensions": [
+    "api-validity",
+    "token-compliance",
+    "accessibility",
+    "build-correctness",
+    "visual-quality",
+    "pattern-adherence"
+  ]
+}

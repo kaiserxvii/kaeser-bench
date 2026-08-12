@@ -5,6 +5,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "@kaeser/web#build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "transit": {
       "dependsOn": ["^transit"]
     },

@@ -139,6 +139,33 @@ After the first vertical slice works, expand task coverage, design-system depth,
 retrieval strategies, and evaluators iteratively. This sequence avoids building broad subsystems
 against assumptions that have not yet survived a real run.
 
+## Current generation slice
+
+The first executable flow intentionally implements only the model-facing half of the architecture:
+
+```text
+typography-editorial-card@1 + kaeser-type@1
+                       |
+                       v
+             full-documentation@1
+                       |
+                       v
+                 OpenAI adapter
+                       |
+                       v
+       captured HTML + replayable run record
+```
+
+Run it with `bun run benchmark:generate`. A run records the resolved task, exact context bundle,
+normalized model response and provider provenance, extracted HTML source, content digests, and
+completed/deferred pipeline stages under `runs/<run-id>/`.
+
+This is a `generation-only` result, not a benchmark score. The runner does not build, render, or
+evaluate the generated HTML. Keeping that boundary visible lets the task/context/model pattern be
+tested without treating untrusted source as safe or implying that an unrendered response passed the
+benchmark. The next vertical slice should consume the captured source in an isolated sandbox rather
+than changing the input side of this flow.
+
 ## Deliberately deferred decisions
 
 - frontend framework and application router

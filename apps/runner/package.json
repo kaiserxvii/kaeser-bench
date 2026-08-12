@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target bun --packages external",
+    "generate": "bun run ./src/generation.cli.ts",
+    "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@kaeser/benchmark": "workspace:*",
     "@kaeser/contracts": "workspace:*",
+    "@kaeser/design-system": "workspace:*",
     "@kaeser/evaluator": "workspace:*",
     "@kaeser/model-adapters": "workspace:*",
     "@kaeser/retrieval": "workspace:*",

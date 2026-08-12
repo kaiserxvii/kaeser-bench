@@ -23,6 +23,7 @@ export type RunStatus =
   | "failed";
 
 export type ArtifactKind =
+  | "task"
   | "context-bundle"
   | "model-response"
   | "source"
