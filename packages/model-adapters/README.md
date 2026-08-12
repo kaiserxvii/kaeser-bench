@@ -94,6 +94,7 @@ const costUsd = calculateOpenAITextCostUsd({
 });
 ```
 
-Adapters expose cache-read and cache-write counts when the provider reports them. Callers should
-persist the pricing catalog version, selected service tier, and whether regional processing applied
-alongside `costUsd`; the amount alone is not enough to reproduce billing later.
+Adapters expose cache-read and cache-write counts when the provider reports them. `costUsd` uses the
+applied response tier and is omitted when that tier is absent or unsupported. Callers should persist
+the pricing catalog version, applied service tier, and whether regional processing applied alongside
+the cost; the amount alone is not enough to reproduce billing later.

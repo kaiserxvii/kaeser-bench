@@ -4,6 +4,7 @@ import type {
   CalculateOpenAITextCostOptions,
   CreateOpenAICostCalculatorOptions,
   OpenAIContextTier,
+  OpenAIInvocationServiceTier,
   OpenAITextModelPricing,
   OpenAITextPricingCatalog,
 } from "./types/pricing";
@@ -97,15 +98,20 @@ export const openAIGpt56Pricing = {
 export function createOpenAICostCalculator(
   options: CreateOpenAICostCalculatorOptions,
 ): ModelCostCalculator {
-  return (usage) => {
-    if (usage.inputTokens === undefined || usage.outputTokens === undefined) {
+  return (usage, billingMetadata) => {
+    const serviceTier = getOpenAIServiceTier(billingMetadata.serviceTier);
+    if (
+      usage.inputTokens === undefined ||
+      usage.outputTokens === undefined ||
+      serviceTier === undefined
+    ) {
       return undefined;
     }
 
     return calculateOpenAITextCostUsd({
       catalog: options.pricing.catalog,
       model: options.model,
-      serviceTier: options.pricing.serviceTier,
+      serviceTier,
       usage: {
         inputTokens: usage.inputTokens,
         ...(usage.cachedInputTokens === undefined
@@ -143,6 +149,23 @@ export function calculateOpenAITextCostUsd(options: CalculateOpenAITextCostOptio
   return options.regionalProcessing
     ? baseCost * (1 + options.catalog.regionalProcessingUplift)
     : baseCost;
+}
+
+function getOpenAIServiceTier(
+  serviceTier: string | undefined,
+): OpenAIInvocationServiceTier | undefined {
+  switch (serviceTier) {
+    case "default":
+    case "standard":
+      return "standard";
+    case "flex":
+      return "flex";
+    case "fast":
+    case "priority":
+      return "fast";
+    default:
+      return undefined;
+  }
 }
 
 function getContextTier(pricing: OpenAITextModelPricing, inputTokens: number): OpenAIContextTier {

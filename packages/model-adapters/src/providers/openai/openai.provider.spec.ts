@@ -60,6 +60,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
     tools: [],
     top_p: 1,
     truncation: "disabled",
+    service_tier: "default",
     usage: {
       input_tokens: 17,
       input_tokens_details: { cached_tokens: 0 },
@@ -88,7 +89,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
       baseURL: `${server.url}v1`,
       pricing: {
         catalog: openAIGpt56Pricing,
-        serviceTier: "standard",
+        serviceTier: "fast",
       },
     });
 
@@ -124,7 +125,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
           body: providerResponse,
         },
         providerMetadata: {
-          openai: { responseId: "resp_test" },
+          openai: { responseId: "resp_test", serviceTier: "default" },
         },
       },
     });
@@ -132,7 +133,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
     expect(receivedRequest?.headers.get("authorization")).toBe("Bearer test-api-key");
     expect(receivedBody).toMatchObject({
       model: "gpt-5.6",
-      service_tier: "default",
+      service_tier: "fast",
       input: [
         {
           role: "developer",

@@ -1,7 +1,7 @@
-import type { ModelUsage } from "@kaeser/contracts";
+import type { ModelProviderMetadata, ModelUsage } from "@kaeser/contracts";
 import { generateText } from "ai";
 import type { ModelAdapter } from "./model.adapter";
-import type { AISDKAdapterConfiguration } from "./types/providers.types";
+import type { AISDKAdapterConfiguration, ModelBillingMetadata } from "./types/providers.types";
 
 export function createAISDKModelAdapter(options: AISDKAdapterConfiguration): ModelAdapter {
   return {
@@ -40,12 +40,13 @@ export function createAISDKModelAdapter(options: AISDKAdapterConfiguration): Mod
           : { outputTokens: result.usage.outputTokens }),
         latencyMs: performance.now() - startedAt,
       };
-      const costUsd = options.calculateCostUsd?.(usageWithoutCost);
+      const step = result.finalStep;
+      const billingMetadata = getBillingMetadata(step.providerMetadata, step.response.body);
+      const costUsd = options.calculateCostUsd?.(usageWithoutCost, billingMetadata);
       const usage: ModelUsage = {
         ...usageWithoutCost,
         ...(costUsd === undefined ? {} : { costUsd }),
       };
-      const step = result.finalStep;
 
       return {
         output: {
@@ -76,4 +77,31 @@ export function createAISDKModelAdapter(options: AISDKAdapterConfiguration): Mod
       };
     },
   };
+}
+
+function getBillingMetadata(
+  providerMetadata: ModelProviderMetadata | undefined,
+  responseBody: unknown,
+): ModelBillingMetadata {
+  const responseServiceTier = getResponseServiceTier(responseBody);
+  if (responseServiceTier !== undefined) {
+    return { serviceTier: responseServiceTier };
+  }
+
+  for (const metadata of Object.values(providerMetadata ?? {})) {
+    if (typeof metadata.serviceTier === "string") {
+      return { serviceTier: metadata.serviceTier };
+    }
+  }
+
+  return {};
+}
+
+function getResponseServiceTier(responseBody: unknown): string | undefined {
+  if (typeof responseBody !== "object" || responseBody === null) {
+    return undefined;
+  }
+
+  const serviceTier = Reflect.get(responseBody, "service_tier");
+  return typeof serviceTier === "string" ? serviceTier : undefined;
 }

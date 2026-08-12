@@ -3,7 +3,14 @@ import type { JSONValue, LanguageModel } from "ai";
 
 export type AISDKProviderOptions = Readonly<Record<string, Readonly<Record<string, JSONValue>>>>;
 
-export type ModelCostCalculator = (usage: ModelUsage) => number | undefined;
+export type ModelBillingMetadata = {
+  serviceTier?: string;
+};
+
+export type ModelCostCalculator = (
+  usage: ModelUsage,
+  billingMetadata: ModelBillingMetadata,
+) => number | undefined;
 
 export type ProviderAdapterOptions<ModelId extends string> = {
   model: ModelId;
