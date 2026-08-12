@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import type { ModelRequest } from "@kaeser/contracts";
-import { createOpenAIAdapter } from "../../index";
+import { createOpenAIAdapter, openAIGpt56Pricing } from "../../index";
 
 const request: ModelRequest = {
   task: {
@@ -60,6 +60,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
     tools: [],
     top_p: 1,
     truncation: "disabled",
+    service_tier: "default",
     usage: {
       input_tokens: 17,
       input_tokens_details: { cached_tokens: 0 },
@@ -86,6 +87,10 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
       model: "gpt-5.6",
       apiKey: "test-api-key",
       baseURL: `${server.url}v1`,
+      pricing: {
+        catalog: openAIGpt56Pricing,
+        serviceTier: "fast",
+      },
     });
 
     const invocation = await adapter.generate(request);
@@ -97,7 +102,9 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
         text: "export function PricingCard() {}",
         usage: {
           inputTokens: 17,
+          cachedInputTokens: 0,
           outputTokens: 23,
+          costUsd: 0.000775,
           latencyMs: expect.any(Number),
         },
       },
@@ -118,7 +125,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
           body: providerResponse,
         },
         providerMetadata: {
-          openai: { responseId: "resp_test" },
+          openai: { responseId: "resp_test", serviceTier: "default" },
         },
       },
     });
@@ -126,6 +133,7 @@ test("an OpenAI model records normalized output with auditable provenance", asyn
     expect(receivedRequest?.headers.get("authorization")).toBe("Bearer test-api-key");
     expect(receivedBody).toMatchObject({
       model: "gpt-5.6",
+      service_tier: "fast",
       input: [
         {
           role: "developer",
