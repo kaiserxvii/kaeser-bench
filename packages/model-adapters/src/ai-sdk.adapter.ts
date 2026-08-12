@@ -19,17 +19,31 @@ export function createAISDKModelAdapter(options: AISDKAdapterConfiguration): Mod
           requestBody: true,
           responseBody: true,
         },
+        ...(options.providerOptions === undefined
+          ? {}
+          : { providerOptions: options.providerOptions }),
         ...(signal === undefined ? {} : { abortSignal: signal }),
       });
 
-      const usage: ModelUsage = {
+      const usageWithoutCost: ModelUsage = {
         ...(result.usage.inputTokens === undefined
           ? {}
           : { inputTokens: result.usage.inputTokens }),
+        ...(result.usage.inputTokenDetails.cacheReadTokens === undefined
+          ? {}
+          : { cachedInputTokens: result.usage.inputTokenDetails.cacheReadTokens }),
+        ...(result.usage.inputTokenDetails.cacheWriteTokens === undefined
+          ? {}
+          : { cacheWriteInputTokens: result.usage.inputTokenDetails.cacheWriteTokens }),
         ...(result.usage.outputTokens === undefined
           ? {}
           : { outputTokens: result.usage.outputTokens }),
         latencyMs: performance.now() - startedAt,
+      };
+      const costUsd = options.calculateCostUsd?.(usageWithoutCost);
+      const usage: ModelUsage = {
+        ...usageWithoutCost,
+        ...(costUsd === undefined ? {} : { costUsd }),
       };
       const step = result.finalStep;
 

@@ -1,4 +1,9 @@
-import type { LanguageModel } from "ai";
+import type { ModelUsage } from "@kaeser/contracts";
+import type { JSONValue, LanguageModel } from "ai";
+
+export type AISDKProviderOptions = Readonly<Record<string, Readonly<Record<string, JSONValue>>>>;
+
+export type ModelCostCalculator = (usage: ModelUsage) => number | undefined;
 
 export type ProviderAdapterOptions<ModelId extends string> = {
   model: ModelId;
@@ -11,4 +16,6 @@ export type AISDKAdapterConfiguration = {
   model: string;
   version: string;
   languageModel: LanguageModel;
+  providerOptions?: AISDKProviderOptions;
+  calculateCostUsd?: ModelCostCalculator;
 };

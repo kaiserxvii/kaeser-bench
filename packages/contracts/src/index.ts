@@ -58,6 +58,8 @@ export interface ModelRequest {
 
 export interface ModelUsage {
   inputTokens?: number;
+  cachedInputTokens?: number;
+  cacheWriteInputTokens?: number;
   outputTokens?: number;
   costUsd?: number;
   latencyMs: number;

@@ -52,3 +52,48 @@ provenance. Provenance distinguishes the requested model from the provider-repor
 retains the provider request body, response ID and body, headers, finish reason, warnings, and
 provider metadata. Pin exact model IDs in benchmark configuration and persist this evidence with the
 run so aliases or compatible gateways cannot make provenance ambiguous.
+
+## Pricing
+
+Pricing is represented as a versioned catalog instead of being fetched during a run. This keeps a
+historical run tied to the rates used when it was recorded. The shared pricing types model service
+tiers, context tiers, uncached input, cached input, cache writes, and output tokens. Provider files
+specialize those dimensions without forcing other labs to use OpenAI names.
+
+The included OpenAI catalog is a snapshot for the GPT-5.6 family:
+
+```ts
+import { createOpenAIAdapter, openAIGpt56Pricing } from "@kaeser/model-adapters";
+
+const model = createOpenAIAdapter({
+  model: "gpt-5.6-terra",
+  pricing: {
+    catalog: openAIGpt56Pricing,
+    serviceTier: "standard",
+  },
+});
+
+const invocation = await model.generate(request);
+const costUsd = invocation.output.usage.costUsd;
+```
+
+The same calculator can price recorded usage without making a model request:
+
+```ts
+import { calculateOpenAITextCostUsd, openAIGpt56Pricing } from "@kaeser/model-adapters";
+
+const costUsd = calculateOpenAITextCostUsd({
+  catalog: openAIGpt56Pricing,
+  model: "gpt-5.6-terra",
+  serviceTier: "standard",
+  usage: {
+    inputTokens: 1_000,
+    cachedInputTokens: 200,
+    outputTokens: 500,
+  },
+});
+```
+
+Adapters expose cache-read and cache-write counts when the provider reports them. Callers should
+persist the pricing catalog version, selected service tier, and whether regional processing applied
+alongside `costUsd`; the amount alone is not enough to reproduce billing later.
