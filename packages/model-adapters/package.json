@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/openai": "4.0.37",
+    "@ai-sdk/openai": "4.0.41",
     "@kaeser/contracts": "workspace:*",
     "ai": "7.0.59"
   },
